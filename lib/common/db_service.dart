@@ -119,7 +119,7 @@ class DbService {
     var res = await db.rawQuery("select sqlite_version() as version ");
     var dbVersion = res.first["version"].toString();
     var userVersion = await db.getVersion();
-    return "DB Version: $dbVersion     Schema Version: $userVersion";
+    return "DB Version: $dbVersion | Schema Version: $userVersion";
   }
 
   Future<void> _createTables(sqlite.Database dbC) async {

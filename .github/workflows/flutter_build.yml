@@ -27,7 +27,7 @@ jobs:
         run: flutter pub get 
 
       - name: Build web project
-        run: flutter build web --base-href "/bachatgatmanager/"
+        run: flutter build web --base-href "/bachat_gat/"
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3.0.1

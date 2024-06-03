@@ -7,6 +7,8 @@
 import 'package:bachat_gat/common/common_index.dart';
 
 class AppConstants {
+  static const String version = "1.0.0";
+
   static const String imgAppIcon = "assets/images/app_icon.png";
   // Trx Types
   // Credit

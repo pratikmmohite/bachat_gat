@@ -89,33 +89,68 @@ class _ImportExportPageState extends State<ImportExportPage> {
       appBar: AppBar(
         title: Text(local.abImportExport),
       ),
-      bottomSheet: BottomSheet(
-        builder: (BuildContext context) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(dbVersion),
-          );
-        },
-        onClosing: () {},
-      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: OverflowBar(
-          alignment: MainAxisAlignment.spaceAround,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ElevatedButton.icon(
-              onPressed: () {
-                importFile();
-              },
-              icon: const Icon(Icons.upload),
-              label: Text(local.bImportFile),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    importFile();
+                  },
+                  icon: const Icon(Icons.call_received),
+                  label: Text(local.bImportFile),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    exportFile();
+                  },
+                  icon: const Icon(Icons.call_made_rounded),
+                  label: Text(local.bExportFile),
+                ),
+              ],
             ),
-            ElevatedButton.icon(
-              onPressed: () {
-                exportFile();
-              },
-              icon: const Icon(Icons.download),
-              label: Text(local.bExportFile),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    showAboutDialog(
+                      context: context,
+                      applicationName: local.appTitle,
+                      applicationVersion: AppConstants.version,
+                      children: const [
+                        Text("Developers: "),
+                        Text("- Pratik Mohite <dev.pratikm@gmail.com>"),
+                        Text("- Pranav Mohite <dev.pranav.mohite@gmail.com>"),
+                        Text("Website: "),
+                        Text("- https://pratikm.dev")
+                      ],
+                      applicationLegalese: "Copyright © 2024 pratikm.dev",
+                      applicationIcon: Image.asset(
+                        AppConstants.imgAppIcon,
+                        height: 80,
+                      ),
+                    );
+                  },
+                  child: const Text("About & Licenses"),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child:
+                      Text("App Version: ${AppConstants.version} | $dbVersion"),
+                )
+              ],
             ),
           ],
         ),
