@@ -5,12 +5,17 @@
  * Author: Pratik Mohite <dev.pratikm@gmail.com>
 */
 import 'package:bachat_gat/common/db_service.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'app_root.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   var db = DbService();
   await db.initDb();
   runApp(const AppRoot());

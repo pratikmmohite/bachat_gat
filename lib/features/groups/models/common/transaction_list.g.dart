@@ -1,12 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'transaction.dart';
+part of 'transaction_list.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
+TransactionList _$TransactionListFromJson(Map<String, dynamic> json) =>
+    TransactionList(
+      id: json['id'] as String,
       memberId: json['memberId'] as String,
       groupId: json['groupId'] as String,
       trxType: json['trxType'] as String,
@@ -20,16 +22,16 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       trxDt: json['trxDt'] == null
           ? null
           : DateTime.parse(json['trxDt'] as String),
-    )
-      ..id = json['id'] as String
-      ..sysCreated = DateTime.parse(json['sysCreated'] as String)
-      ..sysUpdated = DateTime.parse(json['sysUpdated'] as String);
+      sysCreated: json['sysCreated'] == null
+          ? null
+          : DateTime.parse(json['sysCreated'] as String),
+      sysUpdated: json['sysUpdated'] == null
+          ? null
+          : DateTime.parse(json['sysUpdated'] as String),
+    );
 
-Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
+Map<String, dynamic> _$TransactionListToJson(TransactionList instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'sysCreated': instance.sysCreated.toIso8601String(),
-      'sysUpdated': instance.sysUpdated.toIso8601String(),
       'memberId': instance.memberId,
       'groupId': instance.groupId,
       'trxType': instance.trxType,
@@ -41,4 +43,7 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'sourceId': instance.sourceId,
       'addedBy': instance.addedBy,
       'note': instance.note,
+      'id': instance.id,
+      'sysCreated': instance.sysCreated.toIso8601String(),
+      'sysUpdated': instance.sysUpdated.toIso8601String(),
     };

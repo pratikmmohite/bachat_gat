@@ -111,6 +111,7 @@ class _GroupSummaryCardState extends State<GroupSummaryCard> {
       String cText = widget.viewMode == "balance" ? "Balance" : c.trxType;
       tableRows.add(buildTableRow(cText, c.totalCr - c.totalDr));
     }
+
     return Table(
       children: tableRows,
     );

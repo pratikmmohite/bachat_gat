@@ -46,6 +46,12 @@ class GroupsDao {
     return groups;
   }
 
+  // Future<List<MemberList>?> getMemberList() async {
+  //   var query = await dbService.read("select * from $memberTableName");
+  //   var members = query.map((e) => MemberList.fromJson(e)).toList();
+  //   return members;
+  // }
+
   Future<int> addGroupMember(GroupMember member) async {
     var row = await dbService.insert(memberTableName, member.toJson());
     return row;
@@ -66,6 +72,12 @@ class GroupsDao {
     var rows = await dbService.read(query, pars);
     var transactions = rows.map((e) => Transaction.fromJson(e)).toList();
     return transactions;
+  }
+
+  Future<List<TransactionList>> getTransactionList() async {
+    var rows = await dbService.read("select * from $transactionTableName");
+    var tranasctions = rows.map((e) => TransactionList.fromJson(e)).toList();
+    return tranasctions;
   }
 
   Future<int> addTransaction(Transaction trx) async {
@@ -194,6 +206,12 @@ class GroupsDao {
     );
     var members = rows.map((e) => GroupMember.fromJson(e)).toList();
     return members;
+  }
+
+  Future<List<Loan>> getLoans() async {
+    var rows = await dbService.read("select * from ${loanTableName};");
+    var loans = rows.map((e) => Loan.fromJson(e)).toList();
+    return loans;
   }
 
   Future<List<Loan>> getMemberLoans(MemberLoanFilter filter) async {

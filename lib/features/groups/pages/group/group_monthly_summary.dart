@@ -96,7 +96,16 @@ class _GroupMonthlySummaryState extends State<GroupMonthlySummary> {
         );
       },
     ).toList();
-    return DataTable(columns: columns, rows: rows);
+    double width = MediaQuery.of(context).size.width / columns.length;
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: ConstrainedBox(
+        constraints:
+            BoxConstraints(minWidth: MediaQuery.of(context).size.width),
+        child: DataTable(columns: columns, rows: rows),
+      ),
+    );
+    // return DataTable(columnSpacing: width, columns: columns, rows: rows);
   }
 
   void dateRangePickup() async {
@@ -164,7 +173,7 @@ class _GroupMonthlySummaryState extends State<GroupMonthlySummary> {
       ),
       bottomSheet: ExpansionTile(
         title: Text(local.sumr),
-        initiallyExpanded: true,
+        initiallyExpanded: false,
         children: [
           GroupSummaryCard(
             key: Key("gs_${groupSummary.length}"),

@@ -7,10 +7,15 @@
 import 'dart:io';
 
 import 'package:bachat_gat/common/common_index.dart';
+import 'package:bachat_gat/features/groups/dao/dao_index.dart';
 import 'package:bachat_gat/locals/app_local_delegate.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart' as sqlite;
+
+import '../../models/models_index.dart';
+// import '../../models/common/group.dart';
 
 class ImportExportPage extends StatefulWidget {
   const ImportExportPage({super.key});
@@ -21,6 +26,10 @@ class ImportExportPage extends StatefulWidget {
 
 class _ImportExportPageState extends State<ImportExportPage> {
   String dbVersion = "";
+  String groupTableName = "groups";
+  String memberTableName = "members";
+  String transactionTableName = "transactions";
+  String loanTableName = "loans";
 
   Future<void> fetchDbVersion() async {
     var dbService = DbService();
@@ -55,6 +64,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
         return;
       }
       var dbService = DbService();
+
       if (!kIsWeb) {
         await dbService.bkpDb();
       }
@@ -65,6 +75,44 @@ class _ImportExportPageState extends State<ImportExportPage> {
       AppUtils.close(context);
     } catch (e) {
       AppUtils.toast(context, e.toString());
+    }
+  }
+
+  Future<void> syncDataToFirestore(BuildContext context) async {
+    final dao = GroupsDao();
+    final db = FirebaseFirestore.instance;
+
+    Future<void> insertData(
+        String collectionName, Map<String, dynamic> data, String docId) async {
+      try {
+        await db.collection(collectionName).doc(docId).set(data);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('$collectionName data inserted successfully')));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Failed to insert $collectionName data: $e')));
+      }
+    }
+
+    var groups = await dao.getGroups();
+    for (var group in groups) {
+      await insertData(groupTableName, group.toJson(), group.name);
+      var members = await dao.getMembers(MemberFilter(group.id));
+      for (var member in members) {
+        await insertData(memberTableName, member.toJson(), member.id);
+      }
+    }
+
+    var transactions = await dao.getTransactionList();
+    for (var transaction in transactions) {
+      await insertData(
+          transactionTableName, transaction.toJson(), transaction.id);
+    }
+
+    var loans =
+        await dao.getTransactionList(); // This might need to be dao.getLoans()
+    for (var loan in loans) {
+      await insertData(loanTableName, loan.toJson(), loan.id);
     }
   }
 
@@ -114,6 +162,11 @@ class _ImportExportPageState extends State<ImportExportPage> {
                   },
                   icon: const Icon(Icons.call_made_rounded),
                   label: Text(local.bExportFile),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () => syncDataToFirestore(context),
+                  icon: Icon(Icons.sync),
+                  label: Text("Sync"),
                 ),
               ],
             ),

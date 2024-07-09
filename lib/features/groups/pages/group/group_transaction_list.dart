@@ -71,6 +71,28 @@ class _GroupTransactionListState extends State<GroupTransactionList> {
     }
   }
 
+  String getLocalValue(String trxType) {
+    var local = AppLocal.of(context);
+    const String ttBankInterest = "BankInterest";
+    const String ttExpenditures = "Expenditures";
+    const String ttOtherDeposit = "OtherDeposit";
+    const String ttBankDeposit = "BankDeposit";
+    const String ttBankCharges = "BankCharges";
+    if (trxType == ttBankInterest) {
+      return local.ttBankInterest;
+    } else if (trxType == ttExpenditures) {
+      return local.ttExpenditures;
+    } else if (trxType == ttOtherDeposit) {
+      return local.ltOther;
+    } else if (trxType == ttBankDeposit) {
+      return local.ttBankDeposit;
+    } else if (trxType == ttBankCharges) {
+      return local.ttBankCharges;
+    } else {
+      return "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var local = AppLocal.of(context);
@@ -141,7 +163,7 @@ class _GroupTransactionListState extends State<GroupTransactionList> {
                     cells: [
                       DataCell(Text(trx.trxPeriod)),
                       DataCell(Text(
-                        trx.trxType,
+                        getLocalValue(trx.trxType),
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 15),
                       )),
@@ -170,7 +192,9 @@ class _GroupTransactionListState extends State<GroupTransactionList> {
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 15),
                       )),
-                      DataCell(Text(AppUtils.getHumanReadableDt(trx.trxDt))),
+                      DataCell(Text(trx.trxDt.day.toString() +
+                          "-" +
+                          local.getHumanTrxPeriod(trx.trxDt))),
                       DataCell(
                         CustomDeleteIcon<Transaction>(
                           item: trx,
