@@ -86,8 +86,6 @@ class _ImportExportPageState extends State<ImportExportPage> {
         String collectionName, Map<String, dynamic> data, String docId) async {
       try {
         await db.collection(collectionName).doc(docId).set(data);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('$collectionName data inserted successfully')));
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Failed to insert $collectionName data: $e')));

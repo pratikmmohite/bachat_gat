@@ -4,6 +4,8 @@
  * Proprietary and confidential
  * Author: Pratik Mohite <dev.pratikm@gmail.com>
 */
+import 'dart:async';
+
 import 'package:bachat_gat/common/constants.dart';
 import 'package:bachat_gat/common/utils.dart';
 
@@ -415,6 +417,20 @@ class GroupsDao {
     }
 
     return 0.0; // Default value if no result
+  }
+
+  Future<String?> getLastLoanInterestDate(GroupMemberDetails filter) async {
+    var query = """
+          SELECT trxPeriod from transactions where memberId=? and groupId=? order by trxPeriod desc limit 1 ;
+    """;
+    var result = await dbService.read(query, [filter.memberId, filter.groupId]);
+    DateTime currentMonth = DateTime.now();
+    String date = AppUtils.getTrxPeriodFromDt(currentMonth);
+    if (result.isNotEmpty) {
+      String? dateFinal = (result.first["trxPeriod"] as String?)?.toString();
+      return dateFinal;
+    }
+    return date;
   }
 
   String getAmountQuery(String trxType, String trxPeriod,
