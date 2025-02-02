@@ -105,7 +105,6 @@ class _MemberDetailsListState extends State<MemberDetailsList> {
   }
 
   Future<void> handleAddLoanTrxClick(GroupMemberDetails memberDetails) async {
-    print("Loan inside");
     await AppUtils.navigateTo(
       context,
       AddMemberTransaction(

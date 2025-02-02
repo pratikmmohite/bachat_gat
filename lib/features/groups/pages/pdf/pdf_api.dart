@@ -99,7 +99,6 @@ class PdfApi {
         ];
       },
     ).toList();
-    print(data[0][0]);
     pdf.addPage(
       pw.Page(
         build: (context) {

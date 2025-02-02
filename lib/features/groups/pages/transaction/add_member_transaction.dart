@@ -205,7 +205,6 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
   @override
   Widget build(BuildContext context) {
     var local = AppLocal.of(context);
-    print("IN the record transaction");
     return Scaffold(
       appBar: AppBar(
         title: Text(local.abRecordTransaction),
