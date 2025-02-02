@@ -19,7 +19,7 @@ class CustomDateField extends StatelessWidget {
     required this.field,
     required this.value,
     required this.onChange,
-    this.futureDataDisable = true,
+    this.futureDataDisable = false,
   });
 
   @override
