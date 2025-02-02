@@ -52,8 +52,9 @@ class _CustomDeleteIconState<T> extends State<CustomDeleteIcon<T>> {
                   if (widget.onAccept != null) {
                     widget.onAccept!(widget.item);
                   }
+
                 } catch (e) {
-                  print(e);
+                  // print(e);
                 }
                 Navigator.of(context).pop();
               },

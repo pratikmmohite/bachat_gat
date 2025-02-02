@@ -22,7 +22,6 @@ class GroupMemberDetailsService {
       groupMemberDetails = await groupDao.getGroupMembersWithBalance(filter);
     } catch (e) {
       // Handle error appropriately, such as logging or displaying an error message
-      print('Error fetching group member details: $e');
     }
 
     return groupMemberDetails;

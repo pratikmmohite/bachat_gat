@@ -44,7 +44,7 @@ class _ImportExportPageState extends State<ImportExportPage> {
       var dt = DateTime.now();
       String fileName = "${dt.year}_${dt.month}_${dt.day}_bachat_db";
       AppUtils.toast(context, dbFilePath);
-      print(dbFilePath);
+
       var x = await AppUtils.saveAsFile(fileName, dbFilePath);
     } catch (e) {
       AppUtils.toast(context, e.toString());

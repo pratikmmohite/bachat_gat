@@ -206,7 +206,7 @@ class ExcelExample {
     if (fileBytes != null) {
       var filePath = await AppUtils.saveAsBytes(groupName, "xlsx", Uint8List.fromList(fileBytes));
       if(filePath != null) {
-        AppUtils.openFilePath(filePath);
+        await AppUtils.openFilePath(filePath);
       }
       return filePath;
     }

@@ -20,7 +20,7 @@ dependencies:
   sqflite_common_ffi_web: ^0.4.5+4
   uuid: ^4.5.1
   json_annotation: ^4.9.0
-  file_saver: ^0.2.14
+#  file_saver: ^0.2.14
   file_picker: ^8.3.1
   shared_preferences: ^2.5.1
   pdf: ^3.11.2
@@ -30,6 +30,7 @@ dependencies:
   cross_file: ^0.3.4+2
   firebase_core: ^3.10.1
   cloud_firestore: ^5.6.2
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

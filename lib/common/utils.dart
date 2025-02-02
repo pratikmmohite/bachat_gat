@@ -8,7 +8,7 @@ import 'dart:io';
 
 import 'package:cross_file/cross_file.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:file_saver/file_saver.dart';
+// import 'package:file_saver/file_saver.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -128,8 +128,9 @@ class AppUtils {
 
   static Future<String?> saveAsFile(String name, String filePath) async {
     String ext = filePath.split(".").last;
-    var path = await FileSaver.instance.saveAs(
-        filePath: filePath, name: name, ext: ext, mimeType: MimeType.other);
+    var f = File(filePath);
+    var bytes = await f.readAsBytes();
+    var path = await saveAsBytes(name, ext, bytes);
     return path;
   }
 
@@ -138,13 +139,14 @@ class AppUtils {
     String ext,
     Uint8List bytes,
   ) async {
-    var path = await FileSaver.instance
-        .saveAs(bytes: bytes, name: name, ext: ext, mimeType: MimeType.other);
+    var path = await FilePicker.platform.saveFile(dialogTitle: "Save", bytes: bytes, fileName: "$name.$ext");
+    // var path = await FileSaver.instance
+    //     .saveAs(bytes: bytes, name: name, ext: ext, mimeType: MimeType.other);
     return path;
   }
 
-  static openFilePath(String filePath){
-    OpenFile.open(filePath);
+  static openFilePath(String filePath) async {
+   return await OpenFile.open(filePath);
   }
 
   static Future<String> pickFilePath([List<String>? allowedExtensions]) async {
