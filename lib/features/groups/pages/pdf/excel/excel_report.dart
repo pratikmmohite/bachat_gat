@@ -16,7 +16,7 @@ class ExcelExample {
     await AppUtils.saveAsBytes(fileName, "xlsx", bytes);
   }
 
-  static Future<void> createAndSaveExcel(String groupId, String groupName,
+  static Future<String?> createAndSaveExcel(String groupId, String groupName,
       DateTime startDate, DateTime endDate) async {
     var excel = Excel.createExcel();
     Sheet sheetObject = excel['Sheet1'];
@@ -204,11 +204,12 @@ class ExcelExample {
 
     final fileBytes = excel.save();
     if (fileBytes != null) {
-      AppUtils.saveAndOpenFile(fileBytes);
+      var filePath = await AppUtils.saveAsBytes(groupName, "xlsx", Uint8List.fromList(fileBytes));
+      if(filePath != null) {
+        AppUtils.openFilePath(filePath);
+      }
+      return filePath;
     }
-
-    // saveAsExcel(groupName, fileBytes);
-    // await previewExcel(fileBytes);
-    // saveFile("YearReport.xlsx", fileBytes!);
+    return null;
   }
 }

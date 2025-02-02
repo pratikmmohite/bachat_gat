@@ -122,8 +122,17 @@ class _YearlyReportState extends State<YearlyReport> {
                       ),
                       icon: const Icon(Icons.table_view),
                       onPressed: () async {
-                        ExcelExample.createAndSaveExcel(_group.id.toString(),
-                            _group.name.toString(), _startDate, _endDate);
+                        try {
+                          var filePath = await ExcelExample.createAndSaveExcel(
+                              _group.id.toString(),
+                              _group.name.toString(), _startDate, _endDate);
+                          if(filePath == null) {
+                            AppUtils.toast(context, "Failed to save file");
+                          }
+                            AppUtils.toast(context, "File Saved: ${filePath}");
+                        }catch(e){
+                          AppUtils.toast(context, "Failed to save file ${e}");
+                        }
                       },
                       label: const Text('Download'),
                     ),

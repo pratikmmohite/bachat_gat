@@ -12,7 +12,7 @@ import 'package:file_saver/file_saver.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:open_filex/open_filex.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart' as path;
 import 'package:uuid/uuid.dart';
 
@@ -143,17 +143,8 @@ class AppUtils {
     return path;
   }
 
-  static saveAndOpenFile(List<int> bytes, {String ext = "xlsx"}) async {
-    var directory = await getTempDirectory();
-
-    var id = "x${AppUtils.getUUID()}";
-    String filePath = [directory, "$id.$ext"].join(Platform.pathSeparator);
-
-    File(filePath)
-      ..createSync(recursive: true)
-      ..writeAsBytesSync(bytes);
-
-    OpenFilex.open(filePath);
+  static openFilePath(String filePath){
+    OpenFile.open(filePath);
   }
 
   static Future<String> pickFilePath([List<String>? allowedExtensions]) async {
