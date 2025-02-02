@@ -36,8 +36,8 @@ class _GroupDetailsScreenState extends State<GroupDetailsScreen>
 
   void buildMonths() {
     tabs = [];
-    tabMonths = AppUtils.getMonthsFromStartToEndDt(group.sdt, group.edt, true);
     var dt = DateTime.now();
+    tabMonths = AppUtils.getMonthsFromStartToEndDt(group.sdt, dt, true);
     var initialIndex = tabMonths.indexWhere(
       (element) => element.year == dt.year && element.month == dt.month,
     );
