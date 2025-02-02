@@ -155,6 +155,7 @@ class _GroupAddPageState extends State<GroupAddPage> {
                           label: local.tfInstallmentAmt,
                           field: "installmentAmt",
                           suffixIcon: const Icon(Icons.currency_rupee),
+                          keyboardType: TextInputType.number,
                           value:
                               "${(group.installmentAmtPerMonth ?? 0).toInt()}",
                           onChange: (value) {
@@ -166,6 +167,7 @@ class _GroupAddPageState extends State<GroupAddPage> {
                           label: local.tfLoanInterest,
                           field: "loanInterestPer",
                           suffixIcon: const Icon(Icons.percent),
+                          keyboardType: TextInputType.number,
                           value:
                               "${(group.loanInterestPercentPerMonth ?? 0).toInt()}",
                           onChange: (value) {
@@ -180,6 +182,7 @@ class _GroupAddPageState extends State<GroupAddPage> {
                         CustomTextField(
                           label: local.tfLateFee,
                           field: "lateFeePerDay",
+                          keyboardType: TextInputType.number,
                           suffixIcon: const Icon(Icons.currency_rupee),
                           value: "${(group.lateFeePerDay ?? 0).toInt()}",
                           onChange: (value) {

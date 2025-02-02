@@ -121,4 +121,19 @@ class CustomDropDownOption<T> {
   String value;
   T valueObj;
   CustomDropDownOption(this.label, this.value, this.valueObj);
+
+  @override
+  String toString() {
+    return value;
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CustomDropDownOption &&
+          runtimeType == other.runtimeType &&
+          value == other.value;
+
+  @override
+  int get hashCode => value.hashCode;
 }

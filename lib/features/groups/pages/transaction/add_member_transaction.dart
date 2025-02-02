@@ -247,7 +247,7 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
           AppUtils.toast(context, local.mSelectLoan);
           return false;
         }
-        if (loanTrx.cr == 0) {
+        if (loanTrx.cr == 0 && loanInterestTrx.cr == 0) {
           AppUtils.toast(context, local.mEnterLoanAmount);
           return false;
         }
@@ -337,6 +337,7 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
     return CustomTextField(
       key: Key("lamt_${loanTrx.sourceId}"),
       label: local.tfLoanAmt,
+      keyboardType: TextInputType.number,
       field: "loanAmount",
       suffixIcon: const Icon(Icons.currency_rupee),
       value: "${(loanTrx.cr ?? 0.0).toInt()}",
@@ -378,6 +379,7 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
     return CustomTextField(
       label: local.tfLateFee,
       field: "lateFee",
+      keyboardType: TextInputType.number,
       value: "${(lateFeeTrx.cr ?? 0).toInt()}",
       suffixIcon: const Icon(Icons.currency_rupee),
       onChange: (value) {
@@ -392,6 +394,7 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
       key: Key("lint_${loanTrx.sourceId}"),
       label: local.tfLoanInterest,
       field: "lateFee",
+      keyboardType: TextInputType.number,
       suffixIcon: const Icon(Icons.currency_rupee),
       value: "${(loanInterestTrx.cr ?? 0)}",
       onChange: (value) {
@@ -405,6 +408,7 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
     return CustomTextField(
       label: local.tfShareAmount,
       field: "shareAmt",
+      keyboardType: TextInputType.number,
       suffixIcon: const Icon(Icons.currency_rupee),
       value: "${(shareTrx.cr ?? 0).toInt()}",
       onChange: (value) {

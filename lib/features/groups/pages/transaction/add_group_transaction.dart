@@ -115,6 +115,7 @@ class _AddGroupTransactionState extends State<AddGroupTransaction> {
               CustomTextField(
                 label: "Enter Amount",
                 field: "cr",
+                keyboardType: TextInputType.number,
                 value: "${trx.cr}",
                 onChange: (val) {
                   trx.cr = double.tryParse(val) ?? 0;
@@ -124,6 +125,7 @@ class _AddGroupTransactionState extends State<AddGroupTransaction> {
               CustomTextField(
                 label: "Enter Amount",
                 field: "dr",
+                keyboardType: TextInputType.number,
                 value: "${trx.dr}",
                 onChange: (val) {
                   trx.dr = double.tryParse(val) ?? 0;

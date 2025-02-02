@@ -123,6 +123,7 @@ class _AddLoanPageState extends State<AddLoanPage> {
     return CustomTextField(
       label: local.tfEnterLoanAmt,
       field: "loanAmount",
+      keyboardType: TextInputType.number,
       suffixIcon: const Icon(Icons.currency_rupee),
       value: "${(loanTrx.loanAmount ?? 0).toInt()}",
       onChange: (value) {
@@ -136,6 +137,7 @@ class _AddLoanPageState extends State<AddLoanPage> {
     return CustomTextField(
       label: local.tfEnterLoanInterest,
       field: "loanAmount",
+      keyboardType: TextInputType.number,
       suffixIcon: const Icon(Icons.percent),
       value: "${(loanTrx.interestPercentage ?? 0).toInt()}",
       onChange: (value) {

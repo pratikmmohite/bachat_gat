@@ -5,6 +5,45 @@
  * Author: Pratik Mohite <dev.pratikm@gmail.com>
 */
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+RegExInputFormatter _numberValidator = RegExInputFormatter.withRegex('^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$');
+class RegExInputFormatter implements TextInputFormatter {
+  final RegExp _regExp;
+
+  RegExInputFormatter._(this._regExp);
+
+  factory RegExInputFormatter.withRegex(String regexString) {
+    final regex = RegExp(regexString);
+    return RegExInputFormatter._(regex);
+  }
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final oldValueValid = _isValid(oldValue.text);
+    final newValueValid = _isValid(newValue.text);
+    if (oldValueValid && !newValueValid) {
+      return oldValue;
+    }
+    return newValue;
+  }
+
+  bool _isValid(String value) {
+    try {
+      final matches = _regExp.allMatches(value);
+      for (Match match in matches) {
+        if (match.start == 0 && match.end == value.length) {
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      // Invalid regex
+      assert(false, e.toString());
+      return true;
+    }
+  }
+}
 
 class CustomTextField extends StatefulWidget {
   final String label;
@@ -37,6 +76,7 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,6 +84,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       child: TextFormField(
         maxLines: widget.maxLines,
         keyboardType: widget.keyboardType,
+        inputFormatters: widget.keyboardType == TextInputType.number ? [_numberValidator] : null,
         onChanged: widget.onChange,
         initialValue: widget.value,
         validator: widget.isRequired
