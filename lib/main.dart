@@ -14,6 +14,7 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: "dev.pratikm.bachat_gat",
     options: DefaultFirebaseOptions.currentPlatform,
   );
   var db = DbService();

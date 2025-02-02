@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1089445798939",
+    "project_id": "dev-pratikm-project",
+    "storage_bucket": "dev-pratikm-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089445798939:android:74f628c1ed52d3d33344be",
+        "android_client_info": {
+          "package_name": "dev.pratikm.bachat_gat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1089445798939-6svltakl19qf3i7c4r05ft2le37662pl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSJT0J_C4fv_LXKCFPfApIvfz7gq2IvXQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1089445798939-6svltakl19qf3i7c4r05ft2le37662pl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1089445798939-itrdafm0dpkc07q3h3cgqhpl74dd7gq9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.pratikm.bachatgatmanager"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
