@@ -4,6 +4,8 @@
  * Proprietary and confidential
  * Author: Pratik Mohite <dev.pratikm@gmail.com>
 */
+import 'dart:async';
+
 import 'package:bachat_gat/common/constants.dart';
 import 'package:bachat_gat/common/utils.dart';
 
@@ -46,6 +48,12 @@ class GroupsDao {
     return groups;
   }
 
+  // Future<List<MemberList>?> getMemberList() async {
+  //   var query = await dbService.read("select * from $memberTableName");
+  //   var members = query.map((e) => MemberList.fromJson(e)).toList();
+  //   return members;
+  // }
+
   Future<int> addGroupMember(GroupMember member) async {
     var row = await dbService.insert(memberTableName, member.toJson());
     return row;
@@ -66,6 +74,12 @@ class GroupsDao {
     var rows = await dbService.read(query, pars);
     var transactions = rows.map((e) => Transaction.fromJson(e)).toList();
     return transactions;
+  }
+
+  Future<List<TransactionList>> getTransactionList() async {
+    var rows = await dbService.read("select * from $transactionTableName");
+    var tranasctions = rows.map((e) => TransactionList.fromJson(e)).toList();
+    return tranasctions;
   }
 
   Future<int> addTransaction(Transaction trx) async {
@@ -116,6 +130,7 @@ class GroupsDao {
         "paidLoanAmount = ($trxQuery), "
         "paidInterestAmount = ($trxQuery) "
         "where id = ?";
+
     List<String> pars = [
       AppConstants.ttLoan,
       AppConstants.sLoan,
@@ -125,7 +140,15 @@ class GroupsDao {
       loanId,
       loanId
     ];
+
     var row = await dbService.write(query, pars);
+
+    var updateStatus = "update $loanTableName set "
+        " status = case when paidLoanAmount >= loanAmount then '${AppConstants.lsComplete}' else '${AppConstants.lsActive}' end "
+        " where id= ? ";
+
+    var row1 = await dbService.write(updateStatus, [loanId]);
+
     return row;
   }
 
@@ -150,16 +173,17 @@ class GroupsDao {
 
   Future<int> updateLoanPaid(Loan loan) async {
     String updateQuery = "update loans set "
-        "paidLoanAmount = paidLoanAmount + ?, "
+        "note = ?, "
         "paidInterestAmount = paidInterestAmount + ?, "
-        "status = case when paidLoanAmount>=loanAmount then ${AppConstants.lsComplete} else ${AppConstants.lsActive} end"
-        // "status = iif(paidLoanAmount >= loanAmount, '${AppConstants.lsComplete}', '${AppConstants.lsActive}') "
+        "status = case when paidLoanAmount+?>=loanAmount then ${AppConstants.lsComplete} else ${AppConstants.lsActive} end "
         "where id = ?";
+
     var row = await dbService.write(
       updateQuery,
       [
         loan.paidLoanAmount,
         loan.paidInterestAmount,
+        loan.paidLoanAmount,
         loan.id,
       ],
     );
@@ -184,6 +208,12 @@ class GroupsDao {
     );
     var members = rows.map((e) => GroupMember.fromJson(e)).toList();
     return members;
+  }
+
+  Future<List<Loan>> getLoans() async {
+    var rows = await dbService.read("select * from ${loanTableName};");
+    var loans = rows.map((e) => Loan.fromJson(e)).toList();
+    return loans;
   }
 
   Future<List<Loan>> getMemberLoans(MemberLoanFilter filter) async {
@@ -387,6 +417,20 @@ class GroupsDao {
     }
 
     return 0.0; // Default value if no result
+  }
+
+  Future<String?> getLastLoanInterestDate(GroupMemberDetails filter) async {
+    var query = """
+          SELECT trxPeriod from transactions where memberId=? and groupId=? order by trxPeriod desc limit 1 ;
+    """;
+    var result = await dbService.read(query, [filter.memberId, filter.groupId]);
+    DateTime currentMonth = DateTime.now();
+    String date = AppUtils.getTrxPeriodFromDt(currentMonth);
+    if (result.isNotEmpty) {
+      String? dateFinal = (result.first["trxPeriod"] as String?)?.toString();
+      return dateFinal;
+    }
+    return date;
   }
 
   String getAmountQuery(String trxType, String trxPeriod,

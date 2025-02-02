@@ -4,6 +4,7 @@
  * Proprietary and confidential
  * Author: Pratik Mohite <dev.pratikm@gmail.com>
 */
+import 'package:bachat_gat/common/common_index.dart';
 import 'package:bachat_gat/locals/app_local_delegate.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +22,8 @@ class YearlyReport extends StatefulWidget {
 
 class _YearlyReportState extends State<YearlyReport> {
   late Group _group;
-  late DateTime _startDate = DateTime.now();
-  late DateTime _endDate = DateTime.now();
+  DateTime _startDate = DateTime(DateTime.now().year, 1, 1);
+  DateTime _endDate = DateTime.now();
   bool isLoading = false;
 
   double totalcredit = 0.0;
@@ -30,11 +31,9 @@ class _YearlyReportState extends State<YearlyReport> {
   String str = '';
   String end = '';
   double bankBalance = 0.0;
-  DateTimeRange dtchange =
-      DateTimeRange(start: DateTime.now(), end: DateTime.now());
 
   String _formattDate(DateTime date) {
-    return "${date.month.toString().padLeft(2, "0")}/${date.year}";
+    return "${date.year}-${date.month.toString().padLeft(2, "0")}";
   }
 
   String formatDt(DateTime dt) {
@@ -61,7 +60,7 @@ class _YearlyReportState extends State<YearlyReport> {
     );
     _textController = TextEditingController(
         text:
-            "${formatDt(DateTime(_startDate.year - 1, _startDate.month, _startDate.day))} to ${formatDt(_endDate)}");
+            " ${AppUtils.getHumanReadableDt(_startDate)} to ${AppUtils.getHumanReadableDt(_endDate)}");
   }
 
   @override
@@ -88,13 +87,10 @@ class _YearlyReportState extends State<YearlyReport> {
                   ),
                   controller: _textController,
                   onTap: () async {
-                    var dt = DateTimeRange(
-                        start: DateTime(_startDate.year - 1, _startDate.month,
-                            _startDate.day),
-                        end: _endDate);
                     DateTimeRange? selectedRange = await showDateRangePicker(
                       context: context,
-                      initialDateRange: dt,
+                      initialDateRange:
+                          DateTimeRange(start: _startDate, end: _endDate),
                       firstDate: DateTime(2000),
                       lastDate: DateTime(2099),
                       initialEntryMode: DatePickerEntryMode.input,
@@ -108,7 +104,6 @@ class _YearlyReportState extends State<YearlyReport> {
                           end = local.getHumanTrxPeriod(_endDate);
                           _textController.text =
                               "${formatDt(selectedRange.start)} to ${formatDt(selectedRange.end)}";
-                          dtchange = selectedRange;
                         },
                       );
                     }
@@ -157,7 +152,6 @@ class _YearlyReportState extends State<YearlyReport> {
 
                         setState(() {
                           balanceSummary = summary;
-
                           isLoading = false;
                         });
                       },
@@ -185,7 +179,7 @@ class _YearlyReportState extends State<YearlyReport> {
                           textAlign: TextAlign.center,
                         ),
                         Text(
-                          '${_formattDate(_startDate)} to ${_formattDate(_endDate)} ',
+                          '${AppUtils.getHumanReadableMonthDt(_startDate)} ${local.to} ${AppUtils.getHumanReadableMonthDt(_endDate)} ',
                           style: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold),
                         ),
@@ -270,14 +264,16 @@ class _YearlyReportState extends State<YearlyReport> {
                                     balanceSummary.expenditures;
                                 break;
                               case 11:
-                                label = local.lRmLoan;
-                                value = balanceSummary.remainingLoan
-                                    .toStringAsFixed(2);
-                              case 12:
                                 label = local.lcrdr;
                                 value = (balanceSummary.expenditures +
                                         bankBalance +
                                         balanceSummary.givenLoan)
+                                    .toStringAsFixed(2);
+                                break;
+
+                              case 12:
+                                label = local.lRmLoan;
+                                value = balanceSummary.remainingLoan
                                     .toStringAsFixed(2);
                                 break;
                             }
@@ -288,7 +284,7 @@ class _YearlyReportState extends State<YearlyReport> {
                                 Text(
                                   label,
                                   style: TextStyle(
-                                    color: (index == 7 || index == 12)
+                                    color: (index == 7 || index == 11)
                                         ? Colors.red
                                         : Colors.black,
                                   ),
@@ -297,7 +293,7 @@ class _YearlyReportState extends State<YearlyReport> {
                                 Text(
                                   value,
                                   style: TextStyle(
-                                    color: (index == 7 || index == 12)
+                                    color: (index == 7 || index == 11)
                                         ? Colors.red
                                         : Colors.black,
                                   ),

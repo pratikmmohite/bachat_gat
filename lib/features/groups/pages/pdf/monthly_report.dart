@@ -4,6 +4,7 @@
  * Proprietary and confidential
  * Author: Pratik Mohite <dev.pratikm@gmail.com>
 */
+import 'package:bachat_gat/common/common_index.dart';
 import 'package:bachat_gat/locals/app_local_delegate.dart';
 import 'package:flutter/material.dart';
 
@@ -81,7 +82,7 @@ class _MonthlyReportState extends State<MonthlyReport> {
               TextFormField(
                 readOnly: true,
                 decoration: InputDecoration(
-                  labelText: "Select Date (YYYY-MM-DD)",
+                  labelText: "Select Month",
                   hintText: "Enter ${local.tfStartDate}",
                   filled: true,
                 ),
@@ -140,7 +141,7 @@ class _MonthlyReportState extends State<MonthlyReport> {
                           textAlign: TextAlign.center,
                         ),
                         Text(
-                          '${local.period} : ${local.getHumanTrxPeriod(_startDate)} ',
+                          '${local.period} : ${AppUtils.getHumanReadableMonthDt(_startDate)} ',
                           style: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold),
                         ),

@@ -41,7 +41,7 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
   late Transaction loanTrx;
   late Transaction loanInterestTrx;
   late Transaction lateFeeTrx;
-
+  String? lastLoanInterestDate = "";
   @override
   void initState() {
     groupMemberDetail = widget.groupMemberDetail;
@@ -50,7 +50,13 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
     groupDao = GroupsDao();
     prepareRequests();
     getLoans();
+    getLastDate();
     super.initState();
+  }
+
+  Future<void> getLastDate() async {
+    lastLoanInterestDate =
+        await groupDao.getLastLoanInterestDate(groupMemberDetail);
   }
 
   Future<void> getLoans() async {
@@ -130,7 +136,7 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
             ),
           ],
         );
-        break;
+      // break;
       case AppConstants.tmBoth:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,7 +171,7 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
             ),
           ],
         );
-        break;
+      // break;
       case AppConstants.tmPayment:
       default:
         return Table(
@@ -178,8 +184,22 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
             )
           ],
         );
-        break;
+      // break;
     }
+  }
+
+  int CalculateMonthDifference(String startDateString, String endDateString) {
+    if (startDateString == "") {
+      return 1;
+    }
+
+    List<String> startParts = startDateString.split('-');
+    int startYear = int.parse(startParts[0]);
+    int startMonth = int.parse(startParts[1]);
+    List<String> endParts = endDateString.split('-');
+    int endYear = int.parse(endParts[0]);
+    int endMonth = int.parse(endParts[1]);
+    return (endYear * 12 + endMonth) - (startYear * 12 + startMonth);
   }
 
   @override
@@ -340,11 +360,14 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
       onChange: (op) {
         var remainingLoan = op.valueObj.loanAmount - op.valueObj.paidLoanAmount;
         var interest = op.valueObj.interestPercentage;
+        var lastDate = AppUtils.getTrxPeriodFromDt(trxPeriodDt);
+        var difference =
+            CalculateMonthDifference(lastLoanInterestDate!, lastDate);
         setState(() {
           loanTrx.sourceId = op.value;
           loanInterestTrx.sourceId = op.value;
-          loanInterestTrx.cr =
-              double.parse((remainingLoan * interest / 100).toStringAsFixed(2));
+          loanInterestTrx.cr = double.parse(
+              (remainingLoan * interest * difference / 100).toStringAsFixed(2));
         });
       },
     );

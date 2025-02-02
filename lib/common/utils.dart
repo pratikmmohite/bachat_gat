@@ -59,6 +59,10 @@ class AppUtils {
     return "${dt.day}-${AppConstants.cEnMonthsStr[dt.month - 1]}-${dt.year}";
   }
 
+  static String getHumanReadableMonthDt(DateTime dt) {
+    return "${AppConstants.cEnMonthsStr[dt.month - 1]} ${dt.year}";
+  }
+
   static String getReadableTrxPeriod(DateTime dt) {
     return "${dt.day}-${AppConstants.cEnMonthsStr[dt.month - 1]}-${dt.year}";
   }

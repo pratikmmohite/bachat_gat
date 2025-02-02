@@ -114,6 +114,7 @@ class _MemberDetailsListState extends State<MemberDetailsList> {
         mode: AppConstants.tmLoan,
       ),
     );
+
     getGroupMembers();
   }
 

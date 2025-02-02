@@ -85,7 +85,7 @@ abstract class AppLocalization {
     "ltShares": "Total Shares (+)",
     "ltBankBalance": "Total Bank Balance",
     "ltExpenditures": "Other Expenditures",
-    "ltOther": "Other Deposit(+)",
+    "ltOther": "Other Deposit",
     "ltGathered": "Total Gathered",
     "lPrm": "Previous Remaining Balance",
     "lTSaving": "Total Saving",
@@ -113,6 +113,11 @@ abstract class AppLocalization {
     "lmcr": "Monthly credit",
     "lcb": "Monthly Closing balance",
     "lcrdr": "Total",
+    "lMemberaName": "Member Name",
+    "ttExpenditures": "Expenditure",
+    "ttBankInterest": "Bank Interest",
+    "ttBankDeposit": "BankDeposit",
+    "ttBankCharges": "Bank Charges",
   };
 
   List<String> get months => [
@@ -257,6 +262,11 @@ abstract class AppLocalization {
   String get lmcr => getValue("lmcr");
   String get lcb => getValue("lcb");
   String get lcrdr => getValue("lcrdr");
+  String get lMemberName => getValue("lMemberaName");
+  String get ttBankInterest => getValue("ttBankInterest");
+  String get ttExpenditures => getValue("ttExpenditures");
+  String get ttBankDeposit => getValue("ttBankDeposit");
+  String get ttBankCharges => getValue("ttBankCharges");
 }
 
 class EnAppLocalization extends AppLocalization {
@@ -270,13 +280,13 @@ class MrAppLocalization extends AppLocalization {
         "appTitle": "बचत गट",
         "abAddLoan": "कर्ज जोडा",
         "abAddMember": "सदस्य जोडा",
-        "abRecordTransaction": "लेन-देन नोंदणी करा",
+        "abRecordTransaction": "जमा-खर्च नोंदणी करा",
         "abMemberList": "सदस्य",
         "abLoanList": "कर्ज",
         "abAddGroup": "समूह जोडा",
         "abImportExport": "आयात/निर्यात डेटा",
-        "mRecordedLoanPaymentSuccess": "कर्ज भुगतान सफळतेने नोंदणी केली",
-        "mRecordedSharePaymentSuccess": "शेअर भुगतान सफळतेने नोंदणी केली",
+        "mRecordedLoanPaymentSuccess": "कर्ज वसूली नोंदणी केली",
+        "mRecordedSharePaymentSuccess": "बचत नोंदणी केली",
         "mSelectLoan": "कृपया कर्ज निवडा",
         "mEnterLoanAmount": "कृपया कर्ज रक्कम प्रविष्ट करा",
         "mEnterShareAmount": "कृपया शेअर रक्कम प्रविष्ट करा",
@@ -313,7 +323,7 @@ class MrAppLocalization extends AppLocalization {
         "tfLoanInterest": "कर्ज व्याज",
         "tfLateFee": "उशिर शुल्क",
         "tfShareAmount": "शेअर रक्कम",
-        "tfSelectLoanToPay": "भुगतान करण्यासाठी कर्ज निवडा",
+        "tfSelectLoanToPay": " वसुलीसाठी कर्ज निवडा",
         "tfMemberName": "सदस्याचे नाव",
         "tfMobileNo": "मोबाइल नंबर",
         "tfAadherNo": "आधार नंबर",
@@ -321,16 +331,16 @@ class MrAppLocalization extends AppLocalization {
         "tfJoiningDate": "सामील होण्याची तारीख",
         "lLoanAmt": "कर्ज रक्कम",
         "lLoanInterest": "कर्ज व्याज",
-        "lPaidLoan": "भुगतान केलेला कर्ज",
-        "lPaidInterest": "भुगतान केलेला व्याज",
+        "lPaidLoan": "अंतर्गत कर्ज वसूली",
+        "lPaidInterest": "वसुली केलेला व्याज",
         "lLateFee": "उशिर शुल्क",
         "lShareAmount": "शेअर रक्कम",
         "lRmLoan": "बाकी कर्ज (-)",
         "lNote": "टिप",
         "lBalance": "शिल्लक",
         "lLoan": "कर्ज",
-        "lPaidShare": "भुगतान केलेला शेअर",
-        "lPaidLateFee": "भुगतान केलेला दंड",
+        "lPaidShare": "बचत जमा",
+        "lPaidLateFee": "दंड",
         "lShare": "शेअर",
         "lMember": "सदस्य",
         "lTotal": "एकूण",
@@ -372,6 +382,11 @@ class MrAppLocalization extends AppLocalization {
         "lmcr": "मासिक जमा",
         "lcb": "चालू महिन्यातील शिल्लक",
         "lcrdr": "एकूण ",
+        "lMemberaName": "सदस्याचे नाव",
+        "ttExpenditures": "खर्च",
+        "ttBankInterest": "बँक मधील व्याज",
+        "ttBankDeposit": "बँक जमा",
+        "ttBankCharges": "बँक शुल्क",
       };
 
   @override

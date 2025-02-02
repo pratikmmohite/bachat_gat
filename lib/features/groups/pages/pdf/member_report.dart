@@ -27,7 +27,7 @@ class _MemberReportState extends State<MemberReport> {
   late String selectedMemberId;
   late List<MemberTransactionDetails> memberData;
   late String selectedMemberName;
-  DateTime _startDate = DateTime.now();
+  late DateTime _startDate;
   DateTime _endDate = DateTime.now();
   DateTimeRange dtchnage =
       DateTimeRange(start: DateTime.now(), end: DateTime.now());
@@ -75,6 +75,7 @@ class _MemberReportState extends State<MemberReport> {
                   memberName: selectedMemberName,
                   groupName: _group.name,
                   context: context);
+
               await PdfApi.previewPDF(bytes, selectedMemberName);
             } catch (e) {
               AppUtils.toast(context, "Failed to generate Pdf");
@@ -112,8 +113,7 @@ class _MemberReportState extends State<MemberReport> {
     _members = widget.members;
     selectedMemberId = _members.isEmpty ? "" : _members[0].id;
     selectedMemberName = _members.isEmpty ? " " : _members[0].name;
-    _startDate = DateTime.now();
-    _endDate = DateTime.now();
+    _startDate = DateTime(_endDate.year, _endDate.month - 1, 1);
 
     _textController = TextEditingController(
         text: "${formatDt(_startDate)} to ${formatDt(_endDate)}");
@@ -153,7 +153,7 @@ class _MemberReportState extends State<MemberReport> {
             TextFormField(
               readOnly: true,
               decoration: InputDecoration(
-                labelText: "Select Date (YYYY-MM-DD) to (YYYY-MM-DD)",
+                labelText: "Select Date ",
                 hintText: "Enter ${local.tfStartDate}",
                 filled: true,
               ),
