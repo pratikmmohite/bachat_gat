@@ -419,16 +419,20 @@ class GroupsDao {
     return 0.0; // Default value if no result
   }
 
-  Future<String?> getLastLoanInterestDate(GroupMemberDetails filter) async {
+  Future<String> getLastLoanInterestDate(GroupMemberDetails filter) async {
     var query = """
-          SELECT trxPeriod from transactions where memberId=? and groupId=? order by trxPeriod desc limit 1 ;
+          SELECT trxPeriod from transactions where 
+          memberId=? 
+          and groupId=?
+          and trxType=? 
+          order by trxPeriod desc limit 1 ;
     """;
-    var result = await dbService.read(query, [filter.memberId, filter.groupId]);
+    var result = await dbService.read(query, [filter.memberId, filter.groupId, AppConstants.ttLoanInterest]);
     DateTime currentMonth = DateTime.now();
     String date = AppUtils.getTrxPeriodFromDt(currentMonth);
     if (result.isNotEmpty) {
       String? dateFinal = (result.first["trxPeriod"] as String?)?.toString();
-      return dateFinal;
+      return dateFinal ?? "";
     }
     return date;
   }

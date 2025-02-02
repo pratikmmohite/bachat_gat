@@ -41,7 +41,7 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
   late Transaction loanTrx;
   late Transaction loanInterestTrx;
   late Transaction lateFeeTrx;
-  String? lastLoanInterestDate = "";
+  String lastLoanInterestDate = "";
   @override
   void initState() {
     groupMemberDetail = widget.groupMemberDetail;
@@ -188,7 +188,7 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
     }
   }
 
-  int CalculateMonthDifference(String startDateString, String endDateString) {
+  int calculateMonthDifference(String startDateString, String endDateString) {
     if (startDateString == "") {
       return 1;
     }
@@ -363,7 +363,7 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
         var interest = op.valueObj.interestPercentage;
         var lastDate = AppUtils.getTrxPeriodFromDt(trxPeriodDt);
         var difference =
-            CalculateMonthDifference(lastLoanInterestDate!, lastDate);
+        calculateMonthDifference(lastLoanInterestDate, lastDate);
         setState(() {
           loanTrx.sourceId = op.value;
           loanInterestTrx.sourceId = op.value;
