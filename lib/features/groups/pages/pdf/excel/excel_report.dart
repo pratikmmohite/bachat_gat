@@ -55,47 +55,47 @@ class ExcelExample {
         groupId, AppUtils.getTrxPeriodFromDt(endDate));
     sheetObject.merge(
         CellIndex.indexByString('A2'), CellIndex.indexByString('A3'),
-        customValue: const TextCellValue("अ. क्र."));
+        customValue: TextCellValue("अ. क्र."));
 
     sheetObject.merge(
         CellIndex.indexByString('B2'), CellIndex.indexByString('B3'),
-        customValue: const TextCellValue("सभासदाचे नाव"));
+        customValue: TextCellValue("सभासदाचे नाव"));
 
     sheetObject.merge(
         CellIndex.indexByString('C2'), CellIndex.indexByString('C3'),
-        customValue: const TextCellValue('बचत जमा (शेअर्स )'));
+        customValue: TextCellValue('बचत जमा (शेअर्स )'));
 
     sheetObject.merge(
         CellIndex.indexByString('D2'), CellIndex.indexByString('D3'),
-        customValue: const TextCellValue('व्याज '));
+        customValue: TextCellValue('व्याज '));
 
     sheetObject.merge(
         CellIndex.indexByString('E2'), CellIndex.indexByString('E3'),
-        customValue: const TextCellValue('दंड'));
+        customValue: TextCellValue('दंड'));
 
     sheetObject.merge(
         CellIndex.indexByString('F2'), CellIndex.indexByString('F3'),
-        customValue: const TextCellValue('इतर जमा'));
+        customValue: TextCellValue('इतर जमा'));
 
     sheetObject.merge(
         CellIndex.indexByString('G2'), CellIndex.indexByString('G3'),
-        customValue: const TextCellValue('एकूण जमा'));
+        customValue: TextCellValue('एकूण जमा'));
 
     sheetObject.merge(
         CellIndex.indexByString('H2'), CellIndex.indexByString('H3'),
-        customValue: const TextCellValue('आज अखेर घेतलेले कर्ज'));
+        customValue: TextCellValue('आज अखेर घेतलेले कर्ज'));
 
     sheetObject.merge(
         CellIndex.indexByString('I2'), CellIndex.indexByString('I3'),
-        customValue: const TextCellValue('परतफेड कर्ज'));
+        customValue: TextCellValue('परतफेड कर्ज'));
 
     sheetObject.merge(
         CellIndex.indexByString('J2'), CellIndex.indexByString('J3'),
-        customValue: const TextCellValue('शिल्लक कर्ज'));
+        customValue: TextCellValue('शिल्लक कर्ज'));
 
     sheetObject.merge(
         CellIndex.indexByString('J2'), CellIndex.indexByString('J3'),
-        customValue: const TextCellValue('दिलेले शेअर्स'));
+        customValue: TextCellValue('दिलेले शेअर्स'));
     String str = AppUtils.getTrxPeriodFromDt(startDate);
     String end = AppUtils.getTrxPeriodFromDt(endDate);
     List<MemberTransactionSummary> yearlyData =
@@ -142,7 +142,7 @@ class ExcelExample {
     }
     List<CellValue?> rowCell = [
       TextCellValue((yearlyData.length + 1).toString()),
-      const TextCellValue("एकूण"),
+      TextCellValue("एकूण"),
       DoubleCellValue(totalShares),
       DoubleCellValue(totalInterest),
       DoubleCellValue(totalPenalty),
@@ -157,48 +157,48 @@ class ExcelExample {
     //for displaying the previous remaining amount in savings group
     var rowNumber = count;
     sheetObject.cell(CellIndex.indexByString('B$rowNumber')).value =
-        const TextCellValue('मागील शिल्लक');
+        TextCellValue('मागील शिल्लक');
     sheetObject.cell(CellIndex.indexByString('C$rowNumber')).value =
         DoubleCellValue(previousYearBalance);
 
     sheetObject.cell(CellIndex.indexByString('E$rowNumber')).value =
-        const TextCellValue('दिलेले कर्ज');
+        TextCellValue('दिलेले कर्ज');
     sheetObject.cell(CellIndex.indexByString('F$rowNumber')).value =
         DoubleCellValue(totalGivenLoan);
     rowNumber++;
     sheetObject.cell(CellIndex.indexByString('B$rowNumber')).value =
-        const TextCellValue('आज अखेर जमा');
+        TextCellValue('आज अखेर जमा');
 
     sheetObject.cell(CellIndex.indexByString('C$rowNumber')).value =
         DoubleCellValue(totalcredit);
 
     //for displaying the expenditures of savings group
     sheetObject.cell(CellIndex.indexByString('E$rowNumber')).value =
-        const TextCellValue('इतर खर्च');
+        TextCellValue('इतर खर्च');
     sheetObject.cell(CellIndex.indexByString('F$rowNumber')).value =
         DoubleCellValue(totalExpenditures);
     rowNumber++;
     //displays the total bank interest deposited by bank
     sheetObject.cell(CellIndex.indexByString('B$rowNumber')).value =
-        const TextCellValue("बँक मधून मिळालेले व्याज");
+        TextCellValue("बँक मधून मिळालेले व्याज");
 
     sheetObject.cell(CellIndex.indexByString('C$rowNumber')).value =
         DoubleCellValue(totalBankInterest);
     //display total given loan till date
     double totalsum = previousYearBalance + totalcredit + totalBankInterest;
     sheetObject.cell(CellIndex.indexByString('E$rowNumber')).value =
-        const TextCellValue("अखेरची शिल्लक");
+        TextCellValue("अखेरची शिल्लक");
     sheetObject.cell(CellIndex.indexByString('F$rowNumber')).value =
         DoubleCellValue(totalsum - totalGivenLoan - totalExpenditures);
     rowNumber++;
     sheetObject.cell(CellIndex.indexByString('B$rowNumber')).value =
-        const TextCellValue("एकूण जमा");
+        TextCellValue("एकूण जमा");
 
     sheetObject.cell(CellIndex.indexByString('C$rowNumber')).value =
         DoubleCellValue(totalsum);
 
     sheetObject.cell(CellIndex.indexByString('E$rowNumber')).value =
-        const TextCellValue("एकूण खर्च");
+        TextCellValue("एकूण खर्च");
     sheetObject.cell(CellIndex.indexByString('F$rowNumber')).value =
         DoubleCellValue(totalsum);
 
