@@ -154,7 +154,7 @@ class _MembersLoanListState extends State<MembersLoanList> {
                             : Colors.red,
                       ),
                     ),
-                    ButtonBar(
+                    OverflowBar(
                       children: [
                         IconButton(
                           onPressed: () {

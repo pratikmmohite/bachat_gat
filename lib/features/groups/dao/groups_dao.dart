@@ -217,9 +217,19 @@ class GroupsDao {
   }
 
   Future<List<Loan>> getMemberLoans(MemberLoanFilter filter) async {
-    String selectClause = "select * "
-        "from $loanTableName ";
+    var lastPaymentTrxDate = """
+          SELECT t.trxPeriod from transactions t where 
+          t.trxType=?
+          and t.sourceType=?
+          and t.sourceId=l.id
+          and t.dr=0
+          order by trxPeriod desc limit 1
+    """;
+    String selectClause = "select *, ($lastPaymentTrxDate) as lastPaymentDate "
+        "from $loanTableName l ";
     List<Object?> pars = [
+      AppConstants.ttLoanInterest,
+      AppConstants.sLoan,
       filter.memberId,
       filter.groupId,
     ];
@@ -230,6 +240,7 @@ class GroupsDao {
       pars.add(filter.status);
     }
     String query = selectClause + whereClause;
+
     var rows = await dbService.read(query, pars);
     var loans = rows.map((e) => Loan.fromJson(e)).toList();
     return loans;
@@ -419,15 +430,15 @@ class GroupsDao {
     return 0.0; // Default value if no result
   }
 
-  Future<String> getLastLoanInterestDate(GroupMemberDetails filter) async {
+  Future<String> getLastLoanInterestDate(String loanId) async {
     var query = """
           SELECT trxPeriod from transactions where 
-          memberId=? 
-          and groupId=?
-          and trxType=? 
+          and trxType=?
+          and sourceType=?
+          and sourceId=?
           order by trxPeriod desc limit 1 ;
     """;
-    var result = await dbService.read(query, [filter.memberId, filter.groupId, AppConstants.ttLoanInterest]);
+    var result = await dbService.read(query, [AppConstants.ttLoanInterest,AppConstants.sLoan, loanId]);
     DateTime currentMonth = DateTime.now();
     String date = AppUtils.getTrxPeriodFromDt(currentMonth);
     if (result.isNotEmpty) {

@@ -41,7 +41,7 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
   late Transaction loanTrx;
   late Transaction loanInterestTrx;
   late Transaction lateFeeTrx;
-  String lastLoanInterestDate = "";
+
   @override
   void initState() {
     groupMemberDetail = widget.groupMemberDetail;
@@ -50,14 +50,9 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
     groupDao = GroupsDao();
     prepareRequests();
     getLoans();
-    getLastDate();
     super.initState();
   }
 
-  Future<void> getLastDate() async {
-    lastLoanInterestDate =
-        await groupDao.getLastLoanInterestDate(groupMemberDetail);
-  }
 
   Future<void> getLoans() async {
     memberLoans = [];
@@ -362,8 +357,11 @@ class _AddMemberTransactionState extends State<AddMemberTransaction> {
         var remainingLoan = op.valueObj.loanAmount - op.valueObj.paidLoanAmount;
         var interest = op.valueObj.interestPercentage;
         var lastDate = AppUtils.getTrxPeriodFromDt(trxPeriodDt);
-        var difference =
-        calculateMonthDifference(lastLoanInterestDate, lastDate);
+        var difference = 1;
+
+        if(op.valueObj.lastPaymentDate?.isNotEmpty ?? false){
+          difference = calculateMonthDifference(op.valueObj.lastPaymentDate!, lastDate);
+        }
         setState(() {
           loanTrx.sourceId = op.value;
           loanInterestTrx.sourceId = op.value;

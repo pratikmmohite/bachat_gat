@@ -26,6 +26,8 @@ class Loan extends ComFields {
   double paidLoanAmount = 0;
   double paidInterestAmount = 0;
 
+  String? lastPaymentDate;
+
   Loan(
       {required this.memberId,
       required this.groupId,

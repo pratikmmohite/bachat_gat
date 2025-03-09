@@ -20,7 +20,8 @@ Loan _$LoanFromJson(Map<String, dynamic> json) => Loan(
     )
       ..sysCreated = DateTime.parse(json['sysCreated'] as String)
       ..sysUpdated = DateTime.parse(json['sysUpdated'] as String)
-      ..id = json['id'] as String;
+      ..id = json['id'] as String
+      ..lastPaymentDate = json['lastPaymentDate'] as String?;
 
 Map<String, dynamic> _$LoanToJson(Loan instance) => <String, dynamic>{
       'sysCreated': instance.sysCreated.toIso8601String(),
@@ -36,4 +37,5 @@ Map<String, dynamic> _$LoanToJson(Loan instance) => <String, dynamic>{
       'note': instance.note,
       'paidLoanAmount': instance.paidLoanAmount,
       'paidInterestAmount': instance.paidInterestAmount,
+      'lastPaymentDate': instance.lastPaymentDate,
     };

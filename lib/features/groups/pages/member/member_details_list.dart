@@ -164,7 +164,7 @@ class _MemberDetailsListState extends State<MemberDetailsList> {
             groupMemberDetail: m,
             trxPeriodDt: trxPeriodDt,
           ),
-          subtitle: buildActions(m),
+          subtitle: buildActions(m, iconOnly: true),
         );
       },
     );
@@ -201,7 +201,7 @@ class _MemberDetailsListState extends State<MemberDetailsList> {
                   m.paidOtherAmount),
               buildCellD(m.lendLoan, () => handleShowLoanClick(m)),
               buildCellD(m.pendingLoanAmount, () => handleShowLoanClick(m)),
-              buildCellI(buildActions(m)),
+              buildCellI(buildActions(m, iconOnly: false)),
             ],
           ),
         )
@@ -290,22 +290,17 @@ class _MemberDetailsListState extends State<MemberDetailsList> {
     );
   }
 
-  Widget buildActions(GroupMemberDetails m) {
+  Widget buildActions(GroupMemberDetails m, {bool iconOnly = true}) {
     var local = AppLocal.of(context);
-    return ButtonBar(
+    return OverflowBar(
       alignment: MainAxisAlignment.spaceEvenly,
-      buttonPadding: const EdgeInsets.all(0),
-      children: [
+      spacing: 0,
+      children: iconOnly ? [
         IconButton(
           onPressed: () => handleBothTrxClick(m),
           icon: const Icon(Icons.receipt_long_outlined),
           tooltip: local.bAddShare,
         ),
-        // IconButton(
-        //   onPressed: () => handleAddLoanTrxClick(m),
-        //   icon: const Icon(Icons.add_shopping_cart),
-        //   tooltip: local.bAddLoan,
-        // ),
         IconButton(
           onPressed: () => handleShowLoanClick(m),
           icon: const Icon(Icons.account_balance_outlined),
@@ -315,6 +310,23 @@ class _MemberDetailsListState extends State<MemberDetailsList> {
           onPressed: () => handleShowTransactionListClick(m),
           icon: const Icon(Icons.remove_red_eye_outlined),
           tooltip: local.bShowTransactions,
+        )
+      ] :
+      [
+        TextButton.icon(
+          onPressed: () => handleBothTrxClick(m),
+          icon: const Icon(Icons.receipt_long_outlined),
+          label: Text(local.bAddShare),
+        ),
+        TextButton.icon(
+          onPressed: () => handleShowLoanClick(m),
+          icon: const Icon(Icons.account_balance_outlined),
+          label: Text(local.bShowLoans),
+        ),
+        TextButton.icon(
+          onPressed: () => handleShowTransactionListClick(m),
+          icon: const Icon(Icons.remove_red_eye_outlined),
+          label: Text(local.bShowTransactions),
         )
       ],
     );
