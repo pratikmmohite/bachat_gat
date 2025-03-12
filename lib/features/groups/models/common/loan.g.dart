@@ -37,5 +37,4 @@ Map<String, dynamic> _$LoanToJson(Loan instance) => <String, dynamic>{
       'note': instance.note,
       'paidLoanAmount': instance.paidLoanAmount,
       'paidInterestAmount': instance.paidInterestAmount,
-      'lastPaymentDate': instance.lastPaymentDate,
     };

@@ -25,7 +25,7 @@ class Loan extends ComFields {
   String note = "";
   double paidLoanAmount = 0;
   double paidInterestAmount = 0;
-
+  @JsonKey(includeToJson: false)
   String? lastPaymentDate;
 
   Loan(

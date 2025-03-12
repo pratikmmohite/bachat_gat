@@ -294,6 +294,7 @@ class MrAppLocalization extends AppLocalization {
         "mAddMemberMsg": "सदस्य जोडण्यासाठी + वर क्लिक करा",
         "mConfirmDeleteMsg": 'तुमची खात्री आहे की तुम्ही हे हटवू इच्छिता?',
         "mEmptyMemberDetails": "व्यवहार रेकॉर्ड करण्यासाठी सदस्य जोडा",
+        "bShowTransactions":"व्यवहार",
         "bAddGroup": "समूह जोडा",
         "bAddMember": "सदस्य जोडा",
         "bImportFile": "डेटा आयात करा",
